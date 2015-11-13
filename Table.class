@@ -1,0 +1,123 @@
+/**
+ * @author Brandon
+ * This is the table class for the xSQL engine
+ * which will be implemented by a Catalog class
+ * and will make use of a column class.  This 
+ * function of this class is to act like the SQL 
+ * engine with a CREATE and DROP command.  There 
+ * are two constructors for this class.  One takes
+ * no parameters, and the other takes two.  
+ * 
+ * The two functions will be used to create and 
+ * drop a table.  Dropping a table means deleting
+ * the table.  
+ *
+ */
+public class Table
+{
+	private Table next;
+	private Table previous;
+	private Column first;
+	
+	
+	/**
+	 * Constructor for a table with no parameters
+	 */
+	public Table()
+	{
+		this.setNext(null);
+		this.setPrevious(null);
+		this.first = null;
+	}
+	
+	/**
+	 * Constructor to create a new table with set
+	 * values
+	 * @param next Table to link to
+	 * @param first column to link to
+	 */
+	public Table(Table next, Table previous, Column first)
+	{
+		this.setNext(next);
+		this.setPrevious(previous);
+		this.setFirst(first);
+	}
+
+	/**
+	 * @return the next Table
+	 */
+	public Table getNext()
+	{
+		return next;
+	}
+
+	/**
+	 * @param next Table that will be set
+	 */
+	public void setNext(Table next)
+	{
+		this.next = next;
+	}
+	
+	/**
+	 * @param the first Column
+	 */
+	public Column getFirst()
+	{
+		return first;
+	}
+	
+	/**
+	 * @param first Column to be set
+	 */
+	public void setFirst(Column first)
+	{
+		this.first = first;
+	}
+	
+	/**
+	 * @return previous Table
+	 */
+	public Table getPrevious()
+	{
+		return previous;
+	}
+	
+	/**
+	 * @param previous Table to be set
+	 */
+	public void setPrevious(Table previous)
+	{
+		this.previous = previous;
+	}
+	
+	/**
+	 * Creates a table with parameters
+	 * as well as sets previous table to 
+	 * current
+	 * @param current Table
+	 * @param first Column
+	 * @return Table that is created
+	 */
+	public Table createTable(Table current, Column first)
+	{
+		//Creates table with links already set up to
+		Table temp = new Table(null, current, first);
+		return temp;
+	}
+	
+	/**
+	 * Drops table and sets the references to the 
+	 * corresponding value
+	 * @param previous Table
+	 * @param current Table
+	 * @param next Table
+	 */
+	public void dropTable(Table previous, Table current, Table next)
+	{
+		//Sets next table to current's previous
+		next.previous = current.previous;
+		//Sets previous table to current's next
+		previous.next = current.next;
+	}
+}
